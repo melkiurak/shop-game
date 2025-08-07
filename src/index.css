@@ -12,3 +12,6 @@ body {
 h2 {
   @apply text-2xl font-Vazirmatn font-bold;
 }
+h3 {
+  @apply text-base font-Vazirmatn font-medium;
+}

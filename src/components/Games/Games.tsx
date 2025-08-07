@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { GamesData } from "../../server/getData"
 import type { GamesType } from "../../types";
-
+import { FaCalendarAlt,FaShoppingCart } from "react-icons/fa";
 export const Games = () => {
     const [games, setGames] = useState<GamesType[]>([]);
     useEffect(() => {
@@ -12,11 +12,27 @@ export const Games = () => {
         axiosGame();
     }, [])
 
-    return <div>
-        {games.map((game) => (
-        <div key={game.id}>
-          <p>{game.name}</p>
-          <p>{game.price}</p>
+    return <div className="flex-1 grid grid-cols-4 gap-2"> 
+      {games.map((game) => (
+        <div key={game.id} className="flex flex-col border-2 border-[#7D3C98] rounded-xl p-2.5 gap-2">
+          <div className="max-w-[207.2px] h-[239px] rounded-xl bg-no-repeat bg-center bg-cover" style={{backgroundImage:`url(${game.poster})`}}></div>
+          <div className="flex flex-col gap-3">
+            <h3 className="text-white truncate">{game.name}</h3>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2 text-white">
+                <FaCalendarAlt/>
+                {game.date && (
+                  <span>{new Date(game.date).toLocaleDateString("en-US", { year: 'numeric' })}</span>
+                )}
+              </div>
+              <div className="text-white">
+                <span>{game.price}$</span>
+              </div>
+            </div>
+            <button className="border-[#FF5733] border-2 text-[#FF5733] text-xl rounded-2xl px-5 py-2 flex items-center justify-center">
+              <FaShoppingCart/>
+            </button>
+          </div>
         </div>
       ))}
     </div>

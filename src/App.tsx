@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="wrapper"> 
       <Header/>
-      <div className="container">
+      <div className="container flex  gap-5">
         <Fillters/>
         <Games/>
       </div>
