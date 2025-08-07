@@ -12,10 +12,12 @@ export const Games = () => {
         axiosGame();
     }, [])
 
-    return <div className="flex-1 grid grid-cols-4 gap-2"> 
+    return <div className=" grid grid-cols-4 gap-2"> 
       {games.map((game) => (
         <div key={game.id} className="flex flex-col border-2 border-[#7D3C98] rounded-xl p-2.5 gap-2">
-          <div className="max-w-[207.2px] h-[239px] rounded-xl bg-no-repeat bg-center bg-cover" style={{backgroundImage:`url(${game.poster})`}}></div>
+          <div className="flex items-center justify-center h-[239px]">
+            <div className="w-full h-full rounded-xl bg-no-repeat bg-center bg-cover" style={{backgroundImage:`url(${game.poster})`}}></div>
+          </div>
           <div className="flex flex-col gap-3">
             <h3 className="text-white truncate">{game.name}</h3>
             <div className="flex justify-between items-center">
