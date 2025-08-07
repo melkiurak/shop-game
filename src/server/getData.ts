@@ -10,6 +10,7 @@ export const GamesData = async () => {
       price: game.get("price") || "",
       date: game.get("date") || "",
       poster: game.get("poster") || "",
+      id: game.get("objectId") || "",
     }));
   } catch (error) {
     console.log("Error about get data", error);
