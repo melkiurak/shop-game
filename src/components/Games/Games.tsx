@@ -13,12 +13,13 @@ export const Games = () => {
     const cart = useSelector((state: RootState) => state.cart);
 
     const handelAddToCard = (game: GamesType) => {
-      const current = JSON.parse(localStorage.getItem("gameInCart") || "[]");
-      const update = [...current, game];
-      localStorage.setItem('gameInCart', JSON.stringify(update))
+      localStorage.setItem('gameInCart', JSON.stringify(Array.isArray(game)))
       dispatch({type: 'ADD_TO_CART', payload: game});
     };
     console.log(cart)
+
+
+
     useEffect(() => {
         const axiosGame = async () => {
             const result = await GamesData();
