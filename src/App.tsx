@@ -2,10 +2,11 @@ import { IoSearchOutline } from "react-icons/io5"
 import { Fillters } from "./components/Fillters/Fillters"
 import { Games } from "./components/Games/Games"
 import { Header } from "./components/Header/Header"
+import { useSelector } from "react-redux"
 
 function App() {
-
   return (
+
     <div className="wrapper flex flex-col gap-7"> 
       <Header/>
       <div className="h-12 w-full relative container">
