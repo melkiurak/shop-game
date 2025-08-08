@@ -11,7 +11,7 @@ type CartState = {
 };
 
 const initialState: CartState = {
-  games: [],
+  games: JSON.parse(localStorage.getItem("gameInCart") || "[]"),
 };
 
 export const cartReducers = (

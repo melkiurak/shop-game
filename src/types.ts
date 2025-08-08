@@ -1,5 +1,5 @@
 export interface GamesType {
-  id: string | null;
+  id: string;
   name: string | null;
   price: number | null;
   date: string | null;

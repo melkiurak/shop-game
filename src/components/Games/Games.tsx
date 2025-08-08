@@ -11,7 +11,11 @@ export const Games = () => {
     const [games, setGames] = useState<GamesType[]>([]);
     const dispatch = useDispatch();
     const cart = useSelector((state: RootState) => state.cart);
+
     const handelAddToCard = (game: GamesType) => {
+      const current = JSON.parse(localStorage.getItem("gameInCart") || "[]");
+      const update = [...current, game];
+      localStorage.setItem('gameInCart', JSON.stringify(update))
       dispatch({type: 'ADD_TO_CART', payload: game});
     };
     console.log(cart)
