@@ -1,6 +1,9 @@
 import { FaShoppingCart } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/store";
 
 export const Header = () => {
+    const cart = useSelector((state: RootState) => state.cart);
     return <header className="pt-5">
         <div className="container flex items-center justify-between">
             <div>
@@ -14,10 +17,11 @@ export const Header = () => {
                     <li className="font-Vazirmatn font-medium text-[15px]"><a href="">lorem</a></li>
                 </ul>
             </nav>
-            <div>
+            <div className="relative">
                 <button className="border-[#FF5733] border-2 text-[#FF5733] text-xl rounded-2xl px-5 py-2 flex items-center justify-center">
                     <FaShoppingCart/>
                 </button>
+                <div className="absolute bg-[#FF5733] text-white rounded-2xl px-2 -bottom-2 -right-1">{cart.games.length}</div>
             </div>
         </div>
     </header>

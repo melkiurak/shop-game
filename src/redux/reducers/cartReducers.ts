@@ -21,8 +21,10 @@ export const cartReducers = (
   switch (action.type) {
     case cartActionType.COUNT_PRODUCT:
       return state;
-    case cartActionType.ADD_TO_CART:
-      return { ...state, games: [...state.games, action.payload] };
+    case cartActionType.ADD_TO_CART: {
+      const games = Array.isArray(state.games) ? state.games : [];
+      return { ...state, games: [...games, action.payload] };
+    }
     default:
       return state;
   }
