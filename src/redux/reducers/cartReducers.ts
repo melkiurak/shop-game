@@ -1,20 +1,28 @@
+import type { CartType } from "../../types";
+
 export const cartActionType = {
   COUNT_PRODUCT: "COUNT_PRODUCT",
   ADD_TO_CART: "ADD_TO_CART",
   REMOVE_FROM_CART: "REMOVE_FROM_CART",
 } as const;
 
+type CartState = {
+  games: CartType[];
+};
+
+const initialState: CartState = {
+  games: [],
+};
+
 export const cartReducers = (
-  state = { product: 0 },
-  action: { type: keyof typeof cartActionType; payload?: number }
+  state = initialState,
+  action: { type: keyof typeof cartActionType; payload?: CartType }
 ) => {
   switch (action.type) {
     case cartActionType.COUNT_PRODUCT:
-      return { product: action.payload };
+      return state;
     case cartActionType.ADD_TO_CART:
-      return { product: state.product + 1 };
-    case cartActionType.REMOVE_FROM_CART:
-      return { product: state.product - 1 };
+      return { ...state, games: [...state.games, action.payload] };
     default:
       return state;
   }

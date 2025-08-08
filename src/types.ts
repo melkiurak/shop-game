@@ -5,3 +5,7 @@ export interface GamesType {
   date: string | null;
   poster: string | null;
 }
+export interface CartType {
+  countGame: number;
+  games: GamesType[];
+}

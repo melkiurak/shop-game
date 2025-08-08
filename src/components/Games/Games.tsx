@@ -2,8 +2,19 @@ import { useEffect, useState } from "react"
 import { GamesData } from "../../server/getData"
 import type { GamesType } from "../../types";
 import { FaCalendarAlt,FaShoppingCart } from "react-icons/fa";
+import { useDispatch, useSelector  } from "react-redux";
+import type { RootState } from "../../redux/store";
+
+
+
 export const Games = () => {
     const [games, setGames] = useState<GamesType[]>([]);
+    const dispatch = useDispatch();
+    const cart = useSelector((state: RootState) => state.cart);
+    const handelAddToCard = (game: GamesType) => {
+      dispatch({type: 'ADD_TO_CART', payload: game});
+    };
+    console.log(cart)
     useEffect(() => {
         const axiosGame = async () => {
             const result = await GamesData();
@@ -31,7 +42,7 @@ export const Games = () => {
                 <span>{game.price}$</span>
               </div>
             </div>
-            <button className="border-[#FF5733] border-2 text-[#FF5733] text-xl rounded-2xl px-5 py-2 flex items-center justify-center">
+            <button className="border-[#FF5733] border-2 text-[#FF5733] text-xl rounded-2xl px-5 py-2 flex items-center justify-center" onClick={() => game && handelAddToCard(game)}>
               <FaShoppingCart/>
             </button>
           </div>
