@@ -1,4 +1,4 @@
-import type { CartType } from "../../types";
+import type { GamesType } from "../../types";
 
 export const cartActionType = {
   COUNT_PRODUCT: "COUNT_PRODUCT",
@@ -7,7 +7,7 @@ export const cartActionType = {
 } as const;
 
 type CartState = {
-  games: CartType[];
+  games: GamesType[];
 };
 
 const initialState: CartState = {
@@ -16,7 +16,7 @@ const initialState: CartState = {
 
 export const cartReducers = (
   state = initialState,
-  action: { type: keyof typeof cartActionType; payload?: CartType }
+  action: { type: keyof typeof cartActionType; payload?: GamesType }
 ) => {
   switch (action.type) {
     case cartActionType.COUNT_PRODUCT:
