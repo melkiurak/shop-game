@@ -23,7 +23,17 @@ export const cartReducers = (
       return state;
     case cartActionType.ADD_TO_CART: {
       const games = Array.isArray(state.games) ? state.games : [];
-      return { ...state, games: [...games, action.payload] };
+      return {
+        ...state,
+        games: [...games, action.payload],
+      };
+    }
+    case cartActionType.REMOVE_FROM_CART: {
+      const games = Array.isArray(state.games) ? state.games : [];
+      return {
+        ...state,
+        games: games.filter((game) => game.id !== action.payload?.id),
+      };
     }
     default:
       return state;

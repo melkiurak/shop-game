@@ -1,14 +1,23 @@
 import { IoCloseSharp } from "react-icons/io5";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { FaRegTrashAlt } from "react-icons/fa";
+import type { GamesType } from "../../types";
 interface CartProps {
     setCartMenu: React.Dispatch<React.SetStateAction<boolean>>
 } 
 
 export const Cart = ({setCartMenu}:CartProps) => {
     const cartGames = useSelector((state: RootState) => state.cart.games);
+    const dispatch = useDispatch();
+
+    const handelRemoveFromCart = (game: GamesType)  => {
+        const current = JSON.parse(localStorage.getItem('gameInCart') || '[]');
+        const remove = current.filter(g => g.id !== game.id);
+        localStorage.setItem('gameInCart', JSON.stringify(remove));
+        dispatch({type:'REMOVE_FROM_CART', payload: game});
+    }
     console.log(cartGames)
     return <div  className="fixed top-0 left-0 bg-black/40 w-full h-full z-10 flex items-center justify-center">
         <div className="rounded-xl bg-[#1C1B29] p-4 max-w-[900px] w-full" >
@@ -32,7 +41,7 @@ export const Cart = ({setCartMenu}:CartProps) => {
                                 <button className="text-white"><FaMinus/></button>
                             </div>
                             <p className="text-gray-400">${game?.price}</p>
-                            <button className="text-white text-xl">
+                            <button className="text-white text-xl" onClick={()=> game && handelRemoveFromCart(game)}>
                                 <FaRegTrashAlt/>
                             </button>
                         </div>
