@@ -4,6 +4,8 @@ import type { RootState } from "../../redux/store";
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { FaRegTrashAlt } from "react-icons/fa";
 import type { GamesType } from "../../types";
+import { useState } from "react";
+
 interface CartProps {
     setCartMenu: React.Dispatch<React.SetStateAction<boolean>>
 } 
@@ -14,10 +16,10 @@ export const Cart = ({setCartMenu}:CartProps) => {
 
     const handelRemoveFromCart = (game: GamesType)  => {
         const current = JSON.parse(localStorage.getItem('gameInCart') || '[]');
-        const remove = current.filter(g => g.id !== game.id);
+        const remove = current.filter(g => g?.id !== game.id);
         localStorage.setItem('gameInCart', JSON.stringify(remove));
         dispatch({type:'REMOVE_FROM_CART', payload: game});
-    }
+    };
     console.log(cartGames)
     return <div  className="fixed top-0 left-0 bg-black/40 w-full h-full z-10 flex items-center justify-center">
         <div className="rounded-xl bg-[#1C1B29] p-4 max-w-[900px] w-full" >
@@ -28,25 +30,31 @@ export const Cart = ({setCartMenu}:CartProps) => {
                 </button>
             </div>
             <div className="flex flex-col gap-5">
-               {cartGames.map(game => (
-                    <div key={game?.id} className="flex items-center justify-between gap-3 border-2 border-[#FF5733]/70 rounded-xl px-2">
-                        <div className="flex items-center gap-2 flex-1/2">
-                            <div style={{backgroundImage:`url(${game?.poster})`}} className="h-[100px]  w-[100px] bg-no-repeat bg-center bg-cover"></div>
-                            <h3 className="text-white font-Vazirmatn">{game?.name}</h3>
-                        </div>
-                        <div className="flex items-center justify-between flex-1/2">
-                            <div className="flex items-center gap-2">
-                                <button className="text-white"><FaPlus/></button>
-                                <input type="number" className=" border-2 border-white rounded-lg text-white font-Vazirmatn font-extrabold p-2 max-w-[44px] w-full" min={1} max={99} />
-                                <button className="text-white"><FaMinus/></button>
+                {cartGames.length > 0 ? 
+                    cartGames.map(game => (
+                        <div key={game?.id} className="flex items-center justify-between gap-3 border-2 border-[#FF5733]/70 rounded-xl px-2">
+                            <div className="flex items-center gap-2 flex-1/2">
+                                <div style={{backgroundImage:`url(${game?.poster})`}} className="h-[100px]  w-[100px] bg-no-repeat bg-center bg-cover"></div>
+                                <h3 className="text-white font-Vazirmatn">{game?.name}</h3>
                             </div>
-                            <p className="text-gray-400">${game?.price}</p>
-                            <button className="text-white text-xl" onClick={()=> game && handelRemoveFromCart(game)}>
-                                <FaRegTrashAlt/>
-                            </button>
+                            <div className="flex items-center justify-between flex-1/2">
+                                <div className="flex items-center gap-2">
+                                    <button className="text-white"><FaPlus/></button>
+                                    <input type="number" className=" border-2 border-white rounded-lg text-white font-Vazirmatn font-extrabold p-2 max-w-[44px] w-full" min={1} max={99} />
+                                    <button className="text-white"><FaMinus/></button>
+                                </div>
+                                <p className="text-gray-400">${game?.price}</p>
+                                <button className="text-white text-xl" onClick={()=> game && handelRemoveFromCart(game)}>
+                                    <FaRegTrashAlt/>
+                                </button>
+                            </div>
                         </div>
+                    )) : (
+                    <div className=" flex items-center justify-center w-full h-[400px] text-white">
+                        <h2>Корзина пуста</h2>
                     </div>
-                ))}
+                    )
+                }
             </div>
         </div>
     </div>

@@ -11,13 +11,11 @@ export const Games = () => {
     const [games, setGames] = useState<GamesType[]>([]);
     const dispatch = useDispatch();
     const cart = useSelector((state: RootState) => state.cart);
+    const gameInLocal:GamesType[] = JSON.parse(localStorage.getItem("gameInCart") || "[]");
 
     const handelAddToCard = (game: GamesType) => {
       dispatch({ type: 'ADD_TO_CART', payload: game });
     };
-    console.log(cart)
-    
-    
     
     useEffect(() => {
       const axiosGame = async () => {
@@ -27,10 +25,10 @@ export const Games = () => {
       axiosGame();
     }, [])
     useEffect(() => {
-      localStorage.setItem("gameInCart", JSON.stringify(cart.games));
+      localStorage.setItem("gameInCart", JSON.stringify(cart.games),);
     }, [cart.games]);
     return <div className=" grid grid-cols-4 gap-2"> 
-      {games.map((game, index) => (
+      {games.map((game) => (
         <div key={game.id} className="flex flex-col border-2 border-[#7D3C98] rounded-xl p-2.5 gap-2">
           <div className="flex items-center justify-center h-[239px]">
             <div className="w-full h-full rounded-xl bg-no-repeat bg-center bg-cover" style={{backgroundImage:`url(${game.poster})`}}></div>
@@ -48,7 +46,7 @@ export const Games = () => {
                 <span>{game.price}$</span>
               </div>
             </div>
-            <button className={`text-xl rounded-2xl px-5 py-2 flex items-center justify-center ${index ? 'bg-[#FF5733] border-none text-white' : 'border-[#FF5733] border-2 text-[#FF5733] ' }`} onClick={() => game && handelAddToCard(game)}>
+            <button className={`text-xl rounded-2xl px-5 py-2 flex items-center justify-center ${ cart.games.some((g) => g?.id === game.id) ? 'bg-[#FF5733] border-none text-white cursor-not-allowed ' : 'border-[#FF5733] border-2 text-[#FF5733] cursor-pointer' }`} onClick={() => game && handelAddToCard(game)} disabled={cart.games.some((g) => g?.id === game.id)}>
               <FaShoppingCart/>
             </button>
           </div>
