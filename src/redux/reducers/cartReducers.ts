@@ -25,7 +25,9 @@ export const cartReducers = (
       const games = Array.isArray(state.games) ? state.games : [];
       return {
         ...state,
-        games: [...games, action.payload],
+        games: games.some((g) => g.id === action.payload?.id)
+          ? games
+          : [...games, action.payload],
       };
     }
     case cartActionType.REMOVE_FROM_CART: {
