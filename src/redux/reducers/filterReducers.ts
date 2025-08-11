@@ -20,15 +20,23 @@ export const filterReducer = (
   state = initialState,
   action: {
     type: keyof typeof filterActionType;
-    payload?: { selectedGenre?: string; games?: GamesType[] };
+    payload?: { selectedGenre?: string[] | null; games?: GamesType[] };
   }
 ) => {
   switch (action.type) {
     case filterActionType.GENRE_FILTER: {
-      const filteredGames = state.allGames.filter((game) =>
-        game.genres?.some(
-          (gameGenre) => gameGenre === action.payload?.selectedGenre
-        )
+      if (
+        !action.payload?.selectedGenre ||
+        action.payload?.selectedGenre?.length === 0
+      ) {
+        return { ...state, filteredGames: state.allGames };
+      }
+      const filteredGames = state.allGames.filter(
+        (game) =>
+          Array.isArray(game.genres) &&
+          game.genres?.some((gameGenre) =>
+            action.payload?.selectedGenre?.includes(gameGenre)
+          )
       );
       return { ...state, filteredGames: filteredGames };
     }

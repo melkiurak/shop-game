@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 export const Fillters = () => {
     const [selectedGenre, setSelectedGenre] = useState<string []>([]);    
     const dispatch = useDispatch();
-    const genres = ['Action', 'RPG', 'Samurai', 'Sports', 'Shooting', 'Racing', 'Battle', 'Survival', 'Strategy'];
+    const genres = ['Action', 'Action RPG', 'RPG', 'Samurai', 'Sports', 'Shooting', 'Racing', 'Battle', 'Survival', 'Strategy'];
 
     const handleChangeGenre = (e: ChangeEvent<HTMLInputElement>) => {
         const {value, checked} = e.target;
@@ -31,7 +31,7 @@ export const Fillters = () => {
                             checked={selectedGenre.includes(genre)} 
                             value={genre} 
                             onChange={handleChangeGenre}/>
-                        <span className="font-Vazirmatn font-black  text-white">{genre}</span>
+                        <span className="font-Vazirmatn font-black  text-white text-nowrap">{genre}</span>
                     </label>
                 ))}
             </div>
