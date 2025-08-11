@@ -10,6 +10,7 @@ export const GamesData = async () => {
       price: game.get("price") || "",
       date: game.get("date") || "",
       poster: game.get("poster") || "",
+      genres: game.get("genres") || "",
       id: game.id,
     }));
   } catch (error) {

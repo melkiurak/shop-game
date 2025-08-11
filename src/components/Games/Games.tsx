@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { GamesData } from "../../server/getData"
 import type { GamesType } from "../../types";
 import { FaCalendarAlt,FaShoppingCart } from "react-icons/fa";
@@ -8,11 +8,10 @@ import type { RootState } from "../../redux/store";
 
 
 export const Games = () => {
-    const [games, setGames] = useState<GamesType[]>([]);
     const dispatch = useDispatch();
     const cart = useSelector((state: RootState) => state.cart);
-    const gameInLocal:GamesType[] = JSON.parse(localStorage.getItem("gameInCart") || "[]");
-
+    const filterGames = useSelector((state: RootState) => state.filterGame);
+    
     const handelAddToCard = (game: GamesType) => {
       dispatch({ type: 'ADD_TO_CART', payload: game });
     };
@@ -20,7 +19,7 @@ export const Games = () => {
     useEffect(() => {
       const axiosGame = async () => {
         const result = await GamesData();
-        setGames(result ?? []);
+        dispatch({ type: "ALL_GAME", payload: {games: result} });
       };
       axiosGame();
     }, [])
@@ -28,7 +27,7 @@ export const Games = () => {
       localStorage.setItem("gameInCart", JSON.stringify(cart.games),);
     }, [cart.games]);
     return <div className=" grid grid-cols-4 gap-2"> 
-      {games.map((game) => (
+      {filterGames.filteredGames.map((game) => (
         <div key={game.id} className="flex flex-col border-2 border-[#7D3C98] rounded-xl p-2.5 gap-2">
           <div className="flex items-center justify-center h-[239px]">
             <div className="w-full h-full rounded-xl bg-no-repeat bg-center bg-cover" style={{backgroundImage:`url(${game.poster})`}}></div>
